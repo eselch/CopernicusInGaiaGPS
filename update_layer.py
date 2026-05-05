@@ -99,6 +99,22 @@ def update_layer(token, best_date):
     print("Layer not found!")
 
 if __name__ == "__main__":
-    token = get_token()
-    best_date = find_best_date(token)
-    update_layer(token, best_date)
+    try:
+        print("Getting token...")
+        token = get_token()
+        print("Token obtained successfully")
+        
+        print("Searching for best scene...")
+        best_date = find_best_date(token)
+        
+        print("Updating layer...")
+        update_layer(token, best_date)
+        
+        print("Done!")
+    except requests.exceptions.HTTPError as e:
+        print(f"HTTP Error: {e}")
+        print(f"Response body: {e.response.text}")
+        raise
+    except Exception as e:
+        print(f"Error: {e}")
+        raise
